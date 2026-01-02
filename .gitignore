@@ -1,4 +1,4 @@
-### --- SECRETS (MOST IMPORTANT) --- ###
+
 .env
 src/main/resources/application.properties
 src/main/resources/application.yml
@@ -6,7 +6,7 @@ src/main/resources/application.yml
 *.properties.local
 *.yml.local
 
-### --- JAVA & MAVEN --- ###
+
 target/
 !.mvn/wrapper/maven-wrapper.jar
 *.class
@@ -15,7 +15,7 @@ target/
 *.ear
 *.db
 
-### --- OS SPECIFIC --- ###
+
 .DS_Store
 .DS_Store?
 ._*
@@ -24,7 +24,6 @@ target/
 ehthumbs.db
 Thumbs.db
 
-### --- IDE SPECIFIC --- ###
 # IntelliJ
 .idea/
 *.iws
@@ -32,12 +31,12 @@ Thumbs.db
 *.ipr
 out/
 
-# VS Code
+
 .vscode/
 *.code-workspace
 .history/
 
-# Eclipse / STS
+
 .apt_generated
 .classpath
 .factorypath
@@ -46,6 +45,6 @@ out/
 .springBeans
 .sts4-cache
 
-### --- LOGS --- ###
+
 *.log
 logs/
