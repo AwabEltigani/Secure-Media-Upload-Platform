@@ -1,0 +1,19 @@
+services:
+  postgres:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: cloud_file_database
+      POSTGRES_PASSWORD: 0j3!jD~TZ2*J
+      POSTGRES_DB: cloud_files
+    ports:
+      - "5433:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql
+
+volumes:
+  pgdata:
+
+
+
+
+
