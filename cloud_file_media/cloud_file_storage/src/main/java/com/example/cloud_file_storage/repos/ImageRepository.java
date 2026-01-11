@@ -28,6 +28,13 @@ public interface ImageRepository extends JpaRepository<Image, Long> {
     
     boolean existsByIdAndUserId(Long imageId, Long userId);
 
+    boolean existsByFilename(String filename);
+
+    Optional<Image> findByFilenameAndUserId(String filename, Long userId);
+
+    List<Image> findByStatusAndUploadDateBefore(ImageStatus status, LocalDateTime date);
+    
+
     
     
     @Modifying

@@ -23,7 +23,7 @@ public class Image {
     @Column(name = "image_id")
     private Long id;
     
-    @Column(name = "filename", nullable = false) 
+    @Column(name = "filename", nullable = false,unique = true) 
     private String filename;
     
     @Column(name = "file_size", nullable = false) 
@@ -44,9 +44,6 @@ public class Image {
     
     @Column(name = "upload_date", nullable = false, updatable = false)
     private LocalDateTime uploadDate;
-
-    @Column(name="uploud_url",nullable = false,updatable = false,length = 2000)
-    private String uploudUrl;
     
     @PrePersist
     protected void onCreate() {

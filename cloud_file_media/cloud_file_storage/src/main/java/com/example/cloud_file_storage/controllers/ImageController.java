@@ -1,7 +1,7 @@
 package com.example.cloud_file_storage.controllers;
 
 import java.util.List;
-
+import java.util.Map;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -50,31 +50,46 @@ public class ImageController {
      * Request S3 Presigned URL
      */
     @PostMapping("/upload-url")
-    public ResponseEntity<UploadUrlResponse> getUploadUrl(
-            @Valid @RequestBody UploadUrlRequest request,
-            @AuthenticationPrincipal Users user) {
-        
-        log.info("Upload URL request: user={}, file={}", user.getUsername(), request.filename());
-        
-        UploadUrlResponse response = s3Service.generateUploadUrl(
-            user.getUsername(),
-            request.filename(),
-            request.contentType()
-        );
-
-        Image image = new Image();
-        image.setS3Key(response.s3Key());
-        image.setContentType(request.contentType());
-        image.setFileSize(0L);
-        image.setFilename(request.filename());
-        image.setStatus(ImageStatus.SCANNING);
-        image.setUserId(user.getId());
-
-        imageRepository.save(image);
-
-        
-        return ResponseEntity.ok(response);
+public ResponseEntity<?> getUploadUrl(  // Changed to <?> to allow error responses
+        @Valid @RequestBody UploadUrlRequest request,
+        @AuthenticationPrincipal Users user) {
+    
+    log.info("Upload URL request: user={}, file={}", user.getUsername(), request.filename());
+    
+    // Check for duplicate filename FIRST (before generating URL)
+    if (imageRepository.existsByFilename(request.filename())) {
+        log.warn("Duplicate filename detected: {}", request.filename());
+        return ResponseEntity.status(HttpStatus.CONFLICT)
+            .body(Map.of(
+                "error", "File already exists",
+                "filename", request.filename()
+            ));
     }
+    
+    // Generate presigned upload URL
+    UploadUrlResponse response = s3Service.generateUploadUrl(
+        user.getUsername(),
+        request.filename(),
+        request.contentType()
+    );
+    
+    // Create image record with SCANNING status
+    Image image = Image.builder()  // Using builder is cleaner
+        .s3Key(response.s3Key())
+        .contentType(request.contentType())
+        .fileSize(request.fileSize())  // Use actual file size from request
+        .filename(request.filename())
+        .status(ImageStatus.SCANNING)
+        .userId(user.getId())
+        .build();
+    
+    imageRepository.save(image);
+    
+    log.info("Image record created: id={}, s3Key={}, status={}", 
+        image.getId(), image.getS3Key(), image.getStatus());
+    
+    return ResponseEntity.ok(response);
+}
 
     /**
      * Save initial metadata (Status: SCANNING)
