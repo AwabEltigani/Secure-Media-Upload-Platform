@@ -1,5 +1,5 @@
 <div align="center">
-  <h1>🔐 Secure File Upload & Malware Scanning System</h1>
+  <h1>Secure File Upload & Malware Scanning System</h1>
 
   <p>Zero trust, event driven secure file upload system using React, Spring Boot, and AWS GuardDuty.</p>
 
@@ -13,7 +13,6 @@
 
  
   <img src="https://img.shields.io/badge/React-18+-61DAFB?logo=react&logoColor=black" />
-  <img src="https://img.shields.io/badge/Vite-Build-646CFF?logo=vite&logoColor=white" />
   <img src="https://img.shields.io/badge/Spring%20Boot-3.2+-6DB33F?logo=springboot&logoColor=white" />
   <img src="https://img.shields.io/badge/PostgreSQL-Database-336791?logo=postgresql&logoColor=white" />
   <img src="https://img.shields.io/badge/AWS-Cloud-FF9900?logo=amazonaws&logoColor=white" />
