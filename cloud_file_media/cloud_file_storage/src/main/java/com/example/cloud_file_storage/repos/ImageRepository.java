@@ -19,6 +19,10 @@ public interface ImageRepository extends JpaRepository<Image, Long> {
     List<Image> findByUserId(Long userId);
     
     Optional<Image> findByS3Key(String s3Key);
+
+    long countByUserId(Long userId);
+    
+    boolean existsByFilenameAndUserId(String filename, Long userId);
     
     List<Image> findByUserIdAndStatus(Long userId, ImageStatus status);
     

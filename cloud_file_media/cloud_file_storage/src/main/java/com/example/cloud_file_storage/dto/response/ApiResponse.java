@@ -1,9 +1,11 @@
 package com.example.cloud_file_storage.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.time.LocalDateTime;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)  // Only include non-null fields
 public record ApiResponse<T>(
     
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
@@ -26,7 +28,6 @@ public record ApiResponse<T>(
         return success("Success", data);
     }
 
-    // Fixed error method
     public static <T> ApiResponse<T> error(String message) {
         return new ApiResponse<>(
             LocalDateTime.now(),
